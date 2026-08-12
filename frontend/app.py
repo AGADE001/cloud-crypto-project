@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-st.title("🚀 Project 2: Real-Time Crypto Telemetry Dashboard")
+st.title("Project 2: Real-Time Crypto Telemetry Dashboard")
 st.subheader("Live Market Price Logs & Moving Averages")
 
 
