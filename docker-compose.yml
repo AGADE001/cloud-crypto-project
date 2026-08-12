@@ -24,17 +24,31 @@ services:
 
   #Service #3 Ingestion Processor
   ingestion_processor:
-    build: ./ingestion
+    build: ./backend
     container_name: crypto_ingestion
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
-    - ./ingestion:/app
+    - ./backend:/backend
     env_file:
     - .env
     depends_on:
     - postgres-db
     - redis-cache
+
+  frontend_dashboard:
+    build: ./frontend
+    container_name: crypto_dashboard
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - 8501:8501
+    volumes:
+      - ./frontend:/frontend
+    env_file:
+      - .env
+    depends_on:
+      - postgres-db
     
 volumes:
   pgdata:

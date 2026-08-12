@@ -8,12 +8,12 @@ from dotenv import load_dotenv
 #-------------------------------------------#
 load_dotenv()#looks for env file and storing it into a variable
 #Constant variables
-COINGECKO_API_KEY = os.getenv('COINGECKO_API_KEY')
+COINGECKO_API_KEY   = os.getenv('COINGECKO_API_KEY')
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_NAME = os.getenv('DB_NAME')
-DB_HOST = "crypto_postgres"
+DB_USER             = os.getenv('DB_USER')
+DB_PASSWORD         = os.getenv('DB_PASSWORD')
+DB_NAME             = os.getenv('DB_NAME')
+DB_HOST             = os.getenv('DB_HOST')
 DIGITAL_COMMODITIES = [
     "bitcoin", "ethereum", "solana", "ripple", 
     "cardano", "chainlink", "avalanche", "polkadot", 
@@ -23,7 +23,7 @@ DIGITAL_COMMODITIES = [
 #-------------------------------------------#
 
 #--------------Database Function--------------#
-async def postgres_db (crypto_name, current_price, sma_value, deviation_percent): #This function gets triggered by analytics_and_alert():
+async def postgres_db(crypto_name, current_price, sma_value, deviation_percent): #This function gets triggered by analytics_and_alert():
     try:
         conn = await asyncpg.connect(
             host=DB_HOST,
@@ -49,10 +49,10 @@ async def send_discord_alert(crypto_name, current_price, last_price, sma_value, 
     # Discord webhooks expect a payload containing a 'content' field or an embed structure
     payload = {
         "content" : f""" 🚨Threshold Breach Alert🚨\n
-                        Asset: {crypto_name.upper()}\n
-                        Price: {current_price} from {last_price}\n
-                        10-Period SMA: {sma_value}\n
-                        Deviation: {deviation_percent}% from moving average 
+                    Asset:         {crypto_name.upper()}\n
+                    Price:         {current_price} from {last_price}\n
+                    10-Period SMA: {sma_value}\n
+                    Deviation:     {deviation_percent}% from moving average 
                     """
     }
     print(f"[Discord_Webhook] Dispatching payload to network for {crypto_name.upper()} ")
